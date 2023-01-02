@@ -6,6 +6,7 @@ const MongoClient = require('mongodb').MongoClient;
 const dburl = 'mongodb+srv://harry119753:tony5317@cluster0.iphnsby.mongodb.net/test';
 
 let chatArray = [];
+let saveArray=[];
 let state = 0;
 http.createServer(function (req, res) {
     let path = url.parse(req.url, true).pathname;
@@ -92,18 +93,21 @@ http.createServer(function (req, res) {
         });
     } else if (path == "/chatting") {
         if (state == 0) {
+            saveArray.length=0;
             state = 1;
         }
         let q = url.parse(req.url, true).query;
         res.writeHead(200, { "Content-Type": "application/json" });
         if (q.user) {
             let chatJSON = { user: q.user, say: q.say, time: Date().toLocaleString() };
+            saveArray.push(chatJSON);
             chatArray.push(chatJSON);
         }
         console.log(JSON.stringify(chatArray));
         res.end(JSON.stringify(chatArray));
     } else if (path == "/chat/save") {
         if (state == 0) {
+            saveArray.length = 0;
             return;
         } else {
             console.log("save.db out function...");
@@ -112,19 +116,18 @@ http.createServer(function (req, res) {
                 if (err) throw err;
                 const dbo = db.db("mydb");
                 console.log("save.db connecting...");
-                dbo.collection("chat").insertMany(chatArray, false, function (err, res) {
-                    console.log(JSON.stringify(chatArray));
+                dbo.collection("chat").insertMany(saveArray, false, function (err, res) {
+                    console.log(JSON.stringify(saveArray));
                     if (err) throw err;
                     db.close();
                 });
             });
-            state = 0;
-            chatArray.length = 0;
             res.end();
+            state = 0;
         }
-
     } else if (path == "/chat/reload") {
-
+        saveArray.length=0;
+        chatArray.length=0;
         console.log("reload.db out function...");
         MongoClient.connect(dburl, function (err, db) {
             console.log("reload.db in function...");
@@ -133,20 +136,19 @@ http.createServer(function (req, res) {
             console.log("reload.db connecting...");
             dbo.collection("chatRecords").find().toArray(function (err, result) {
                 if (err) throw err;
-                let tmp = [];
+
                 for (let record in result) {
                     let obj = { user: result[record].user, say: result[record].say, time: result[record].time };
-                    tmp.push(obj);
+                    chatArray.push(obj);
                 }
-                console.log(result);
-                chatArray = tmp;
+                console.log(chatArray);
+
                 db.close();
             });
         });
         res.writeHead(200, { "Content-Type": "application/json" });;
         res.end(JSON.stringify(chatArray));
-        chatArray.length = 0;
-        state=0;
+        state = 0 ;
     }
     else {
         res.end();
