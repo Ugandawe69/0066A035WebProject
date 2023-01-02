@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;300;400;500;600;700;900&display=swap");
+
+* {
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+}
+
+:root {
+  --totalwidth: calc(100vw * 85%);
+  --totalheight: calc(100vh * 95%);
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  /*background: linear-gradient(0deg, rgba(48, 53, 58, 0.952), rgba(53, 57, 61, 0.952));*/
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+
+  /*font-family: "Poppins",'Noto Sans TC',sans-serif;*/
+  background: linear-gradient(
+    0deg,
+    rgba(48, 53, 58, 0.952),
+    rgba(53, 57, 61, 0.952)
+  );
+  font-family: "Poppins", "Noto Sans TC", sans-serif;
+  display: block;
+  align-items: center;
+  border-top-right-radius: 5vh;
+  border-bottom-right-radius: 5vh;
+  justify-content: center;
+  color: white;
+}
+
+header {
+  width: 85%;
+  height: 95%;
+  border: 1px solid white;
+  border-radius: 5vh;
+  box-shadow: 5px 0px 12px rgb(138, 82, 18);
+  display: flex;
+}
+
+/*span {
+            word-break: normal;
+            width: auto;
+            display: block;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow: hidden;
+            top: -20px;
+        }*/
+
+.main_container {
+  background: linear-gradient(
+    0deg,
+    rgba(48, 53, 58, 0.952),
+    rgba(53, 57, 61, 0.952)
+  );
+  overflow: hidden;
+  margin: 0%;
+}
+
+.title_container {
+  margin-top: 1%;
+  margin-left: 1%;
+}
+
+.content {
+  margin-left: 2%;
+}
+
+.intro {
+  margin-top: 0.5%;
+  margin-left: 1%;
+}
+
+.title {
+  font-family: "Poppins", "Noto Serif TC", sans-serif;
+}
+
+.note {
+  color: rgb(253, 113, 78);
+}
+
+a {
+  color: rgb(240, 192, 192);
+}
